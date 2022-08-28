@@ -8,7 +8,6 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useDocument } from 'react-firebase-hooks/firestore';
 import { useCountdownTimer } from 'use-countdown-timer';
 import app from '../firebase';
 function Main({data}) {
@@ -40,12 +39,8 @@ const [wrong,setWrong] = useState(0);
 const [dtlst,setList] = useState([])
 const [wpm,setWpm] = useState(0)
 const [acc,setAcc] = useState(0)
-const [value] = useDocument(
-  doc(getFirestore(app), user.email, 'Best_record'),
-  {
-    snapshotListenOptions: { includeMetadataChanges: true },
-  }
-);
+const [word,setWord] = useState(0)
+
 const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
     timer: 1000 * 60,
   });
@@ -80,9 +75,9 @@ const [lst,setLst] = useState(data.data.split(' '))
 const logout = () => {
   signOut(auth)
 };
-if(isRunning===false && strt!==0 && acc<=(correct+wrong)/60 && wpm<=((Math.abs(correct-wrong))/correct)*100){
+if(isRunning===false && strt!==0 && wpm<=(word)/60 && acc<=((Math.abs(correct-wrong))/correct)*100){
    setDoc(doc(db, user.email, "Best_record"), {
-    wpm : (correct+wrong)/60,
+    wpm : (word)/60,
     accurate: ((Math.abs(correct-wrong))/correct)*100
   })
   .then(function (response) {
@@ -92,9 +87,9 @@ if(isRunning===false && strt!==0 && acc<=(correct+wrong)/60 && wpm<=((Math.abs(c
     
   })
 }
-if(isRunning===false && strt!==0 && acc<=(correct+wrong)/60 && wpm<=((Math.abs(correct-wrong))/correct)*100){
+if(isRunning===false && strt!==0 && wpm<=(word)/60 && acc<=((Math.abs(correct-wrong))/correct)*100){
   setDoc(doc(db, "record", user.email), {
-    wpm : (correct+wrong)/60,
+    wpm : (word)/60,
     accuracy: ((Math.abs(correct-wrong))/correct)*100,
     name:user.displayName
   });
@@ -103,7 +98,8 @@ if(isRunning===false && strt!==0 && acc<=(correct+wrong)/60 && wpm<=((Math.abs(c
 const handle_key_press=(e)=>{    
     if(e.code === 'Space'){
         if(isRunning!==false){
-          if(typing.replace(/\s+/g, '')===lst[index]){            
+          if(typing.replace(/\s+/g, '')===lst[index]){     
+            setWord(word+len(typing.replace(/\s+/g, '')))       
             let newArr = [...lst]; // copying the old datas array
             newArr[index] = `<b className="fine" style="color:#01a801">${lst[index]}</b>` ; // replace e.target.value with whatever you want to change it to
             setLst(newArr)
@@ -112,6 +108,8 @@ const handle_key_press=(e)=>{
             setType('')
 
         }else{
+            setWord(word+len(typing.replace(/\s+/g, '')))       
+
             let newArr = [...lst]; // copying the old datas array
             newArr[index] = `<b className="fine" style="color:#f0250a">${lst[index]}</b>` ; // replace e.target.value with whatever you want to change it to
             setLst(newArr)
