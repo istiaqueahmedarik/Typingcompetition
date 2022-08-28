@@ -1,0 +1,153 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.idealtext {
+  border-color: rgb(54, 89, 89);
+  width: 70%;
+  border-radius: 15px;
+  border: 1px solid #acc;
+  display: inline-flex;
+  margin-bottom: 10px;
+  overflow-y: hidden;
+  text-align: justify;
+  padding: 10px;
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  word-spacing: 3px;
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.id_input {
+  /* display: grid; */
+  margin: 24px;
+}
+.input_part {
+  display: grid;
+}
+.submit_button * {
+  margin: 1%;
+  width: 100%;
+}
+.developer {
+  position: fixed;
+  right: 3px;
+  bottom: 0px;
+  color: rgb(167, 156, 156);
+  font-family: fantasy;
+}
+.main {
+  display: grid;
+  place-items: center;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(117, 125, 133);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 30px;
+  border-radius: 10px;
+  border-bottom: 5px ridge #ebb;
+  margin-bottom: 10px;
+}
+.text {
+  margin-right: 2%;
+}
+.container {
+  display: flow-root;
+  width: 100%;
+}
+.fine {
+  color: #f0250a;
+}
+.txt {
+  display: inline-flex !important;
+}
+
+.situation {
+  display: grid;
+  width: fit-content;
+  height: 23vh;
+}
+.check {
+  display: grid;
+  place-items: center;
+  height: 40vh;
+}
+.signUp {
+  display: flex;
+  flex-direction: column;
+  /* margin: auto; */
+  margin-top: auto;
+  margin-bottom: auto;
+  box-shadow: -1px 1px 18px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: -1px 1px 18px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: -1px 1px 18px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+}
+.signUp .MuiInput-root {
+  margin: 10px !important;
+}
+.signUp button {
+  margin: 10px !important;
+}
+.signUp_container {
+  display: grid;
+  grid-template-rows: 1fr 0fr;
+}
+.signUp_container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+
+  height: 69vh;
+  width: 117vh;
+}
+.name {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+
+.id_input {
+  /* justify-content: space-around; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 10fr 1fr;
+}
+.id_input span {
+  grid-row-start: 1;
+  grid-column-start: 1;
+
+  grid-row-end: 2;
+  grid-column-end: 3;
+}
+.id_input .MuiInput-root {
+  margin-right: 10px;
+}
+.submit_button .MuiButton-root {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.verify,
+.loading {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+.table {
+  padding: 3%;
+}
