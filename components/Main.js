@@ -47,7 +47,7 @@ const [value] = useDocument(
   }
 );
 const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * 10,
+    timer: 1000 * 60,
   });
 useEffect(()=>{
   axios.get('https://firestore.googleapis.com/v1/projects/typingmaster-b19f6/databases/(default)/documents/record')
