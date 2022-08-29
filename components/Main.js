@@ -223,9 +223,7 @@ const handle_change=(e)=>{
             
         />
     </div>
-    <div className="developer">
-        Developed by <i>Syed Tamal and Istiaque Ahmed</i>
-    </div>
+   
     </div>
     
   )
