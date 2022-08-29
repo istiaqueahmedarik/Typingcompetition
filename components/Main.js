@@ -71,7 +71,7 @@ useEffect(()=>{
   })
   }
 },[])
-let s = data.data+' ';
+let s = data.data.replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g,'')+' ';
 const [rept,setRept] = useState(2)
 const [lst,setLst] = useState(s.repeat(rept)
 .split(' '))
