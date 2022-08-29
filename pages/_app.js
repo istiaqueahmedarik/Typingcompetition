@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
   // verify
   if(!user) return <Check/>
   if(user.displayName===null) return <Name/>
-  if(user.emailVerified===false) return <Verify/>
+  if(user.emailVerified===false) return <Verify/>  
   return <Component {...pageProps} />
 }
 

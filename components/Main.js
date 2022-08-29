@@ -8,6 +8,7 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import toast, { Toaster } from 'react-hot-toast';
 import { useCountdownTimer } from 'use-countdown-timer';
 import app from '../firebase';
 function Main({data}) {
@@ -70,15 +71,18 @@ useEffect(()=>{
   })
   }
 },[])
-const [lst,setLst] = useState(data.data.split(' '))
-
+let s = data.data+' ';
+const [rept,setRept] = useState(2)
+const [lst,setLst] = useState(s.repeat(rept)
+.split(' '))
+console.log(lst)
 const logout = () => {
   signOut(auth)
 };
 if(isRunning===false && strt!==0 && wpm<=(word)/60 && acc<=((Math.abs(correct-wrong))/correct)*100){
    setDoc(doc(db, user.email, "Best_record"), {
     wpm : (word)/60,
-    accurate: ((Math.abs(correct-wrong))/correct)*100
+    accurate: ((Math.abs(correct))/word)*100
   })
   .then(function (response) {
     // handle success
@@ -90,34 +94,55 @@ if(isRunning===false && strt!==0 && wpm<=(word)/60 && acc<=((Math.abs(correct-wr
 if(isRunning===false && strt!==0 && wpm<=(word)/60 && acc<=((Math.abs(correct-wrong))/correct)*100){
   setDoc(doc(db, "record", user.email), {
     wpm : (word)/60,
-    accuracy: ((Math.abs(correct-wrong))/correct)*100,
+    accuracy: ((Math.abs(correct))/word)*100,
     name:user.displayName
   });
  
 }
 const handle_key_press=(e)=>{    
     if(e.code === 'Space'){
-        if(isRunning!==false){
+        if(isRunning!==false &&index<=lst.length-1){
           if(typing.replace(/\s+/g, '')===lst[index]){     
-            setWord(word+len(typing.replace(/\s+/g, '')))       
+            setWord(word+typing.replace(/\s+/g, '').length)
+
             let newArr = [...lst]; // copying the old datas array
             newArr[index] = `<b className="fine" style="color:#01a801">${lst[index]}</b>` ; // replace e.target.value with whatever you want to change it to
-            setLst(newArr)
-            setIndex(index+1)
+            setLst(newArr)            
+            
+              setIndex(index+1)
+               
             setCorrect(correct+1)
             setType('')
 
         }else{
-            setWord(word+len(typing.replace(/\s+/g, '')))       
+            setWord(word+typing.replace(/\s+/g, '').length)
+    
 
             let newArr = [...lst]; // copying the old datas array
             newArr[index] = `<b className="fine" style="color:#f0250a">${lst[index]}</b>` ; // replace e.target.value with whatever you want to change it to
             setLst(newArr)
+            
+            
             setIndex(index+1)
+            
             setWrong(wrong+1)
             setType('')
         }
 
+
+        }
+        else if(index>lst.length-1){
+          pause();
+          toast('Good Job!',
+                {
+                  icon: '👏',
+                  style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                  },
+                }
+              );
 
         }
         setType('')
@@ -139,7 +164,10 @@ const handle_change=(e)=>{
     <div className="container">
       <div className="main">
         <h1 className="header">Typing Competition</h1>     
-        
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
      
         <div className="idealtext">
         <div className="container">
@@ -170,8 +198,8 @@ const handle_change=(e)=>{
         <Button variant="contained" color="secondary" onClick={logout}>Sign Out☹</Button>
       </div>
       <div className="submit_button" hidden={strt===0 && isRunning===false}> 
-        <h1>WPM:{((correct+wrong)/60)}</h1>
-        <h2>Accuracy: {((Math.abs(correct-wrong))/correct)*100}%</h2>        
+        <h1>WPM:{isRunning===false?((word)/60):"waiting"}</h1>
+        <h2>Accuracy: {((Math.abs(correct))/word)*100}%</h2>        
       </div>
       
       
